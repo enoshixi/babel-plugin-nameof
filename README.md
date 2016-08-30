@@ -39,3 +39,31 @@ console.log("bar");
 console.log("quux");
 
 ```
+
+# Usage
+For whatever reason, every TypeScript developer I talk to is convinced they aren't allowed to use babel. However, they work great together. babel is amazingly powerful and by implementing this transform using babel you can use it with any toolchain that supports it (virtually all of them).
+
+## webpack
+```
+npm install webpack typescript ts-loader babel-loader babel-plugin-nameof --save-dev
+```
+``` javascript
+// webpack.config.js
+module.exports = {
+    entry: "./app.ts",
+    output: {
+        filename: "bundle.js"
+    },
+    resolve: {
+        extensions: [ "", ".ts", ".tsx" ]
+    },
+    module: {
+        loaders: [
+            { 
+                test: /\.tsx?$/, 
+                loaders: [ "babel-loader?plugins[]=nameof", "ts-loader" ]
+            }
+        ]
+    }
+}
+```
