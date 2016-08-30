@@ -45,7 +45,7 @@ For whatever reason, every TypeScript developer I talk to is convinced they aren
 
 ## webpack
 ```
-npm install webpack typescript ts-loader babel-loader babel-plugin-nameof --save-dev
+npm install --save-dev typescript webpack ts-loader babel-loader babel-plugin-nameof
 ```
 ``` javascript
 // webpack.config.js
@@ -66,4 +66,33 @@ module.exports = {
         ]
     }
 }
+```
+
+## gulp
+```
+npm install -g gulp-cli
+npm install --save-dev typescript gulp gulp-typescript gulp-babel babel-plugin-nameof
+```
+``` javascript
+// gulpfile.js
+
+var gulp = require("gulp");
+var ts = require("gulp-typescript");
+var babel = require("gulp-babel");
+var tsProject = ts.createProject("tsconfig.json");
+
+gulp.task("default", function () {
+    return tsProject.src()
+        .pipe(ts(tsProject)).js
+        .pipe(babel({
+            plugins: [ "nameof" ]
+        }))
+        .pipe(gulp.dest("dist"));
+});
+```
+
+## Command line
+```
+npm install --save-dev typescript babel-cli babel-plugin-nameof
+tsc app.ts && babel app.js --plugins nameof --out-file result.js
 ```
